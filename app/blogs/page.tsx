@@ -4,7 +4,8 @@ import { filterBlogTitle } from "../actions/blogs"
 
 const Blogs = async ({ searchParams }: { searchParams: Promise<{ title: string }> }) => {
   const { title } = await searchParams
-  const blogs = getBlogs().sort((a, b) => b.likes - a.likes)
+  const blogs = await getBlogs()
+  blogs.sort((a, b) => b.likes - a.likes)
   const filteredBlogs = title
     ? blogs.filter(blog => blog.title.toLowerCase().includes(title))
     : blogs
