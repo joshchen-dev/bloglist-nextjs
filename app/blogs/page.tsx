@@ -28,4 +28,5 @@ const Blogs = async ({ searchParams }: { searchParams: Promise<{ title: string }
 
   )
 }
+
 export default Blogs

@@ -1,6 +1,6 @@
 {
-  "id": "a254fa6d-ee54-4f13-9e36-e6c7caaf57b3",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "572c08cd-4f3b-4a60-ba15-24a332ba6d25",
+  "prevId": "a254fa6d-ee54-4f13-9e36-e6c7caaf57b3",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -43,7 +43,7 @@
           "name": "user_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {},
