@@ -15,6 +15,13 @@
       "when": 1780022288345,
       "tag": "0001_cultured_skin",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780043159951,
+      "tag": "0002_unique_zaran",
+      "breakpoints": true
     }
   ]
 }
