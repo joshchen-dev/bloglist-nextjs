@@ -7,7 +7,7 @@ import { auth } from "@/auth"
 import { minLength } from "../utils/validation"
 import { ReturnValues } from "@/types"
 
-export const createBlog = async (prevState: { error: string, values: ReturnValues }, formData: FormData) => {
+export const createBlog = async (prevState: { error: string, values?: ReturnValues, success: boolean }, formData: FormData) => {
   const session = await auth()
   if (!session) {
     redirect("/login")
@@ -18,18 +18,22 @@ export const createBlog = async (prevState: { error: string, values: ReturnValue
   const url = formData.get('url') as string
 
   for (const v of [title, author, url]) {
-    const res = minLength(v, 5)
+    const res = minLength(v, 6)
     if (res?.error) {
       return {
         error: res.error,
-        values: { title, author, url }
+        values: { title, author, url },
+        success: false
       }
     }
   }
 
   await addBlog(title, author, url)
   revalidatePath("/blogs")
-  redirect("/blogs")
+  return {
+    error: "",
+    success: true
+  }
 }
 
 export const likeBlog = async (formdata: FormData) => {
