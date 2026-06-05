@@ -1,6 +1,7 @@
 "use client"
 
 import { createBlog } from "@/app/actions/blogs"
+import DivCard from "@/app/components/DivCard"
 import { useNotification } from "@/app/components/NotificationContext"
 import { useRouter } from "next/navigation"
 import { useActionState, useEffect } from "react"
@@ -29,7 +30,7 @@ const NewBlog = () => {
   }, [state, showNotification, router])
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <DivCard>
       <h2 className="text-2xl font-bold mb-4">Create a new blog</h2>
       <form action={formAction} className="bg-white">
         <div className="hover:bg-gray-50 border-2 border-black/60 rounded-lg py-1 px-2 shadow-xl mb-3 space-y-1">
@@ -64,7 +65,7 @@ const NewBlog = () => {
         <button type="submit" className="bg-gray-600 hover:bg-gray-500 px-3 py-1 rounded text-sm text-white">Create</button>
         {state.error && <p style={{ color: "red" }}>{state.error}</p>}
       </form>
-    </div>
+    </DivCard>
   )
 }
 

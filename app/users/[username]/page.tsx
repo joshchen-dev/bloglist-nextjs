@@ -6,6 +6,7 @@ import { notFound } from "next/navigation"
 const UserPage = async ({ params }: { params: Promise<{ username: string }> }) => {
   const { username } = await params
   const user = await getUserWithBlogs(username)
+  console.log(user)
 
   if (!user) {
     notFound()

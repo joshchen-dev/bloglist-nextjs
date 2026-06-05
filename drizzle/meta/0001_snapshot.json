@@ -1,6 +1,6 @@
 {
-  "id": "572c08cd-4f3b-4a60-ba15-24a332ba6d25",
-  "prevId": "a254fa6d-ee54-4f13-9e36-e6c7caaf57b3",
+  "id": "0df555d9-6baa-4f36-a222-4545d13837a7",
+  "prevId": "6dd1194f-10cc-43af-b2a5-770cb43e37ee",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -68,6 +68,80 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.reading_list": {
+      "name": "reading_list",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "blog_id": {
+          "name": "blog_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "read": {
+          "name": "read",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "reading_list_user_id_users_id_fk": {
+          "name": "reading_list_user_id_users_id_fk",
+          "tableFrom": "reading_list",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "reading_list_blog_id_blogs_id_fk": {
+          "name": "reading_list_blog_id_blogs_id_fk",
+          "tableFrom": "reading_list",
+          "tableTo": "blogs",
+          "columnsFrom": [
+            "blog_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "reading_list_user_id_blog_id_unique": {
+          "name": "reading_list_user_id_blog_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "user_id",
+            "blog_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.users": {
       "name": "users",
       "schema": "",
@@ -89,6 +163,19 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "password_hash": {
+          "name": "password_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},

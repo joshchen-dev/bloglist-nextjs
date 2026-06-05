@@ -3,7 +3,6 @@
 import { db } from "@/db"
 import { users } from "@/db/schema"
 import bcrypt from "bcryptjs"
-import { redirect } from "next/navigation"
 import { minLength } from "../utils/validation"
 import { eq } from "drizzle-orm"
 

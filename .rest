@@ -1,0 +1,2 @@
+GET http://localhost:3000/api/me
+Authorization: Bearer 3fc48170-3736-406c-8e88-63f90af4fc88

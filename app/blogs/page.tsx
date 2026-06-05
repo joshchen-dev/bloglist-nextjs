@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { getBlogs } from "../services/blogs"
 import { filterBlogTitle } from "../actions/blogs"
+import DivCard from "../components/DivCard"
 
 const Blogs = async ({ searchParams }: { searchParams: Promise<{ title: string }> }) => {
   const { title } = await searchParams
@@ -11,7 +12,7 @@ const Blogs = async ({ searchParams }: { searchParams: Promise<{ title: string }
     : blogs
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <DivCard>
       <h2 className="text-2xl font-bold mb-4">Blogs</h2>
       <form action={filterBlogTitle} className="mb-4">
         <input className="border rounded mr-2 p-0.5" name="filter" placeholder="enter your title filter..." />
@@ -26,7 +27,7 @@ const Blogs = async ({ searchParams }: { searchParams: Promise<{ title: string }
           </li>
         ))}
       </ul>
-    </div>
+    </DivCard>
 
   )
 }

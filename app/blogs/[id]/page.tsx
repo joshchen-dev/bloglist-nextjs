@@ -1,10 +1,13 @@
 import { likeBlog } from "@/app/actions/blogs"
+import { addToReadingList } from "@/app/actions/readingLists"
 import { getBlogById } from "@/app/services/blogs"
+import { auth } from "@/auth"
 import { notFound } from "next/navigation"
 
 const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params
   const blog = await getBlogById(Number(id))
+  const user = (await auth())?.user
 
   if (!blog) {
     notFound()
@@ -20,11 +23,19 @@ const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       </div>
       <form action={likeBlog}>
         <input type="hidden" name="id" value={blog.id} />
-        <button type="submit" className="bg-gray-600 hover:bg-gray-500 px-3 py-1 rounded text-sm text-white">
+        <button type="submit" className="bg-blue-600 hover:bg-blue-500 px-4 py-2 m-2 rounded text-sm text-white">
           like
         </button>
-
       </form>
+      {user && (
+        <form action={addToReadingList}>
+          <input type="hidden" name="blogId" value={blog.id} />
+          <input type="hidden" name="username" value={String(user.email)} />
+          <button type="submit" className="bg-green-600 hover:bg-green-500 px-4 py-2 m-2 rounded text-sm text-white">
+            add to reading list
+          </button>
+        </form>
+      )}
     </div>
   )
 }

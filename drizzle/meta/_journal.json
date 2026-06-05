@@ -5,22 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1780021700023,
-      "tag": "0000_common_inhumans",
+      "when": 1780649601926,
+      "tag": "0000_tranquil_deadpool",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1780022288345,
-      "tag": "0001_cultured_skin",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1780043159951,
-      "tag": "0002_unique_zaran",
+      "when": 1780650074315,
+      "tag": "0001_thick_skin",
       "breakpoints": true
     }
   ]
