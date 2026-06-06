@@ -3,6 +3,8 @@ import { getUserWithBlogs } from "../services/users"
 import { auth } from "@/auth"
 import { generateToken } from "../actions/token"
 import DivCard from "../components/DivCard"
+import Link from "next/link"
+import { markRead } from "../actions/readingLists"
 
 const MePage = async () => {
   const session = await auth()
@@ -13,6 +15,9 @@ const MePage = async () => {
   }
 
   const userData = await getUserWithBlogs(user.email)
+  console.log(userData?.readingLists)
+  const readList = userData?.readingLists.filter(v => v.read)
+  const unreadList = userData?.readingLists.filter(v => !v.read)
 
   return (
     <DivCard>
@@ -35,12 +40,27 @@ const MePage = async () => {
             Generate New Token
           </button>
         </form>
-        <section className="my-6 space-y-4">
-          <h2 className="text-2xl font-bold">My Reading List</h2>
-          {userData?.readingLists.map(r => (
-            <p key={r.id}>{r.blog.title}</p>
-          ))}
-        </section>
+        {userData?.readingLists && (
+          <section className="my-6 space-y-4">
+            <h2 className="text-2xl font-bold">My Reading List</h2>
+            <h3 className="text-xl font-bold">Unread {`(${unreadList?.length})`}</h3>
+            {unreadList!.map(r => (
+              <div key={r.id}>
+                <form action={markRead} className="flex items-center">
+                  <Link href={`/blogs/${r.blog.id}`}>{r.blog.title}</Link>
+                  <input type="hidden" name="readingListId" value={r.id} />
+                  <button type="submit" className="ml-auto bg-green-600 hover:bg-green-500 px-4 py-2 m-2 rounded text-sm text-white">mark as read</button>
+                </form>
+              </div>
+            ))}
+            <h3 className="text-xl font-bold">Read {`(${readList?.length})`}</h3>
+            {readList!.map(r => (
+              <p key={r.id}>
+                <Link href={`/blogs/${r.blog.id}`}>{r.blog.title}</Link>
+              </p>
+            ))}
+          </section>
+        )}
       </section>
     </DivCard>
   )
