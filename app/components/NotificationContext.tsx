@@ -1,17 +1,18 @@
 "use client"
 
 import { createContext, useContext, useState, useCallback } from "react"
+import { NotificationError } from "../actions/users"
 
 type NotificationType = "success" | "error"
 
 type NotificationContextType = {
-  message: string,
+  error: NotificationError
   type: NotificationType,
-  showNotification: (message: string, type?: NotificationType) => void
+  showNotification: (message: NotificationError, type?: NotificationType) => void
 }
 
 const NotificationContext = createContext<NotificationContextType>({
-  message: "",
+  error: { message: "", type: "" },
   type: "success",
   showNotification: () => { }
 })
@@ -21,22 +22,22 @@ export const NotificationProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [message, setMessage] = useState("")
+  const [error, setError] = useState({ message: "", type: "" })
   const [type, setType] = useState<NotificationType>("success")
 
   const showNotification = useCallback((
-    msg: string,
-    notifiType: NotificationType = "success"
+    error: { message: string, type: string },
+    notifiType: NotificationType = "success",
   ) => {
-    setMessage(msg)
+    setError(error)
     setType(notifiType)
     setTimeout(() => {
-      setMessage("")
+      setError({ message: "", type: "" })
     }, 5 * 1000);
   }, [])
 
   return (
-    <NotificationContext value={{ message, type, showNotification }}>
+    <NotificationContext value={{ error, type, showNotification }}>
       {children}
     </NotificationContext>
   )

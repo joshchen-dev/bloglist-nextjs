@@ -6,14 +6,17 @@ import { useNotification } from "../components/NotificationContext";
 import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
-  const [state, formAction] = useActionState(registerUser, { error: "", success: false })
+  const [state, formAction] = useActionState(registerUser, {
+    error: { message: "", type: "" },
+    success: false
+  })
   const { showNotification } = useNotification()
   const router = useRouter()
-  
+
   useEffect(() => {
     if (state.success) {
-      showNotification("user registered")
-      router.push("/")
+      showNotification({ message: "user registered", type: "" })
+      router.push("/login")
     } else {
       showNotification(state.error, "error")
     }
@@ -43,11 +46,11 @@ export default function RegisterPage() {
         </div>
         <div>
           <label>
-            Re-enter Password
+            Confirm Password
             <input type="password" name="confirm" required />
           </label>
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" data-testid="register-button">Register</button>
       </form>
     </div>
   )

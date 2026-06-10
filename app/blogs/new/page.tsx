@@ -22,10 +22,10 @@ const NewBlog = () => {
   useEffect(() => {
     console.log(state)
     if (state.success) {
-      showNotification("blog created")
+      showNotification({ message: "blog created", type: "notification" })
       router.push("/blogs")
     } else if (state.error) {
-      showNotification(state.error, "error")
+      showNotification({ message: state.error, type: "error" }, "error")
     }
   }, [state, showNotification, router])
 
@@ -62,7 +62,7 @@ const NewBlog = () => {
             </label>
           </div>
         </div>
-        <button type="submit" className="bg-gray-600 hover:bg-gray-500 px-3 py-1 rounded text-sm text-white">Create</button>
+        <button type="submit" className="bg-gray-600 hover:bg-gray-500 px-3 py-1 rounded text-sm text-white" data-testid="create-blog-button">Create</button>
         {state.error && <p style={{ color: "red" }}>{state.error}</p>}
       </form>
     </DivCard>

@@ -6,26 +6,41 @@ import bcrypt from "bcryptjs"
 import { minLength } from "../utils/validation"
 import { eq } from "drizzle-orm"
 
-export const registerUser = async (prevState: { error: string, success: boolean }, formData: FormData) => {
+export type NotificationError = {
+  message: string,
+  type: string
+}
+
+export const registerUser = async (prevState: { error: NotificationError, success: boolean }, formData: FormData) => {
   const username = (formData.get("username") as string)?.trim()
   const name = (formData.get("name") as string)?.trim()
   const password = formData.get("password") as string
   const confirm = formData.get("confirm") as string
 
+  const usernameError = minLength(username, 4)
+  if (usernameError?.error) {
+    return {
+      error: { message: "username less than 4 characters long", type: "username-error" },
+      success: false
+    }
+  }
+
+
+
   for (const v of [username, password]) {
     const res = minLength(v, 4)
     if (res?.error) {
       return {
-        error: res.error,
-        success: false
+        error: { message: res.error, type: "test" },
+        success: false,
       }
     }
   }
 
   if (!confirm || confirm !== password) {
     return {
-      error: "passwords don't match",
-      success: false
+      error: { message: "passwords don't match", type: "passwordConfirm-error" },
+      success: false,
     }
   }
 
@@ -35,8 +50,8 @@ export const registerUser = async (prevState: { error: string, success: boolean 
 
   if (user) {
     return {
-      error: `"${username}" has already been registered`,
-      success: false
+      error: { message: `"${username}" has already been registered`, type: "" },
+      success: false,
     }
   }
 
@@ -45,7 +60,7 @@ export const registerUser = async (prevState: { error: string, success: boolean 
   await db.insert(users).values({ username, name, passwordHash })
 
   return {
-    error: "",
-    success: true
+    error: { message: "", type: "" },
+    success: true,
   }
 }

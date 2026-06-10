@@ -1,13 +1,11 @@
-import DivCard from "./components/DivCard"
+import Homepage from "@/app/mdx-page/homepage.mdx"
 
 const Home = () => {
   return (
-    <DivCard>
-      <div>
-        <h2 className="text-2xl font-bold">bloglist app</h2>
-        Exercise app for <strong>full stack open next.js</strong>
-      </div>
-    </DivCard>
+    <div className="markdown max-w-2xl mx-auto">
+      <Homepage />
+    </div>
   )
 }
+
 export default Home

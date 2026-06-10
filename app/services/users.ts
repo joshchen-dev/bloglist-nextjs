@@ -1,6 +1,8 @@
 import { db } from "@/db"
 import { users } from "@/db/schema"
+import bcrypt from "bcryptjs"
 import { eq } from "drizzle-orm"
+import { stringify } from "querystring"
 
 export const getUsers = async () => {
   return db.query.users.findMany()
@@ -42,4 +44,10 @@ export const getUserWithMatchingToken = async (token: string) => {
       }
     }
   })
+}
+
+export const registerUser = async (username: string, name: string, password: string) => {
+  const passwordHash = await bcrypt.hash(password, 10)
+
+  await db.insert(users).values({ username, name, passwordHash })
 }
